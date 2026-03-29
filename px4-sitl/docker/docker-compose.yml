@@ -1,0 +1,23 @@
+services:
+  px4-sitl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: px4_sitl
+    privileged: true
+    network_mode: host
+    environment:
+      - DISPLAY=:0
+      - WAYLAND_DISPLAY=wayland-0
+      - XDG_RUNTIME_DIR=/run/user/1000
+      - QT_QPA_PLATFORM=xcb
+      - GDK_BACKEND=x11
+      - SDL_VIDEODRIVER=x11
+      - LIBGL_ALWAYS_SOFTWARE=0
+    volumes:
+      - ~/Downloads/Resources/PX4-Autopilot:/px4
+      - ~/Projects/Autonomous-Drones/px4-sitl/models:/gz_models
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /run/user/1000/wayland-0:/run/user/1000/wayland-0
+    stdin_open: true
+    tty: true
